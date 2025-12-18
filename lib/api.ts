@@ -1,11 +1,13 @@
 import axios from "axios";
-import type { Note, NoteTag } from "../types/note";
 import { QueryClient } from "@tanstack/react-query";
+import type { Note, NoteTag } from "../types/note";
 
 const BASE_URL = "https://notehub-public.goit.study/api/notes";
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
 
-axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+if (token) {
+  axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+}
 
 export interface FetchNotesResponse {
   notes: Note[];
@@ -34,7 +36,7 @@ export async function fetchNotes({
   const params: Record<string, string | number> = { page, perPage };
 
   if (search) params.search = search;
-  if (tag) params.tag = tag;
+  if (tag) params.tag = String(tag);
 
   const { data } = await axios.get<FetchNotesResponse>(BASE_URL, { params });
   return data;
