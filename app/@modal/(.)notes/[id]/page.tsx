@@ -1,11 +1,5 @@
-import NotePreview from "@/components/NotePreview/NotePreview";
+import NotePreviewClient from "./NotePreview.client";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-export default function Page({ params }: Props) {
-  return <NotePreview noteId={params.id} />;
+export default function Page({ params }: { params: { id: string } }) {
+  return <NotePreviewClient noteId={params.id} />;
 }
