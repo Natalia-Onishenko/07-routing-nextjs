@@ -1,18 +1,23 @@
+import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import CSS from "./HomePage.module.css";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
-import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+
+import Header from "../components/Header/Header";
+import Footer from "../components/Footer/Footer";
+import TanStackProvider from "../components/TanStackProvider/TanStackProvider";
+
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "NoteHub",
-  description: "A simple and efficient notes application",
+  description: "NoteHub app",
 };
 
 export default function RootLayout({
   children,
+  modal,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
+  modal: ReactNode;
 }) {
   return (
     <html lang="en">
@@ -21,6 +26,7 @@ export default function RootLayout({
           <Header />
           <main>{children}</main>
           <Footer />
+          {modal}
         </TanStackProvider>
       </body>
     </html>
