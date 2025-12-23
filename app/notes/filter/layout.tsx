@@ -1,14 +1,17 @@
+// app/notes/filter/layout.tsx
+import styles from "./LayoutNotes.module.css";
+
 export default function FilterLayout({
-  children,
   sidebar,
+  children,
 }: {
-  children: React.ReactNode;
   sidebar: React.ReactNode;
+  children: React.ReactNode;
 }) {
   return (
-    <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
-      <aside style={{ width: 220 }}>{sidebar}</aside>
-      <main style={{ flex: 1 }}>{children}</main>
+    <div className={styles.wrapper}>
+      <aside className={styles.sidebar}>{sidebar}</aside>
+      <main className={styles.content}>{children}</main>
     </div>
   );
 }

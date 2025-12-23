@@ -1,20 +1,18 @@
-import type { JSX } from "react";
-import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
-import { fetchNoteById, fetchQueryClient } from "../../../lib/api";
-import NoteDetailsClient from "./NoteDetails.client";
-
-interface NoteDetailsPageProps {
-  params: Promise<{ id: string }>;
-}
+// app/@modal/(.)notes/[id]/page.tsx
+import { QueryClient, dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { fetchNoteById } from "../../../lib/api"; // перевір шлях у твоєму проєкті
+import NotePreviewClient from "../../../components/NotePreview/NotePreview";
 
 export const dynamic = "force-dynamic";
 
-export default async function NoteDetailsPage({
+export default async function Page({
   params,
-}: NoteDetailsPageProps): Promise<JSX.Element> {
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
 
-  const queryClient = fetchQueryClient();
+  const queryClient = new QueryClient();
 
   await queryClient.prefetchQuery({
     queryKey: ["note", id],
@@ -23,7 +21,7 @@ export default async function NoteDetailsPage({
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <NoteDetailsClient />
+      <NotePreviewClient noteId={id} />
     </HydrationBoundary>
   );
 }
